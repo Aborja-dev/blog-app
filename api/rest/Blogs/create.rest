@@ -1,0 +1,10 @@
+POST  http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IktpbGxlciIsImlkIjoiNjMyYmQ2NzYwY2MwNjVkYTc3ZTEyNDM5IiwiaWF0IjoxNjYzODIxMzgxfQ.TindAwaoU2KkDMtYjYg-c_VxuGPZ1KAMdXrUiRkOcd8
+
+{
+	"title": "Haz un backend con express",
+	"author": "Abraham Borja",
+	"url": "http://miblog.com/1",
+	"likes": 0
+}

@@ -1,0 +1,26 @@
+{
+  "name": "part-5",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "workspaces": [
+    "app",
+    "api"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start:app": "npm run start --workspace=app",
+    "start:api": "npm run dev --workspace=api",
+    "test:api": "npm run test:all --workspace=api",
+    "start:dev": "npm run start:api && npm run start:app"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
