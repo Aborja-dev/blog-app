@@ -10,17 +10,31 @@
   "main": "index.js",
   "scripts": {
     "start:app": "npm run start --workspace=app",
+    "lint:start": "eslint",
     "start:api": "npm run dev --workspace=api",
     "test:api": "npm run test:all --workspace=api",
+    "test:app": "npm run test --workspace=app",
     "start:dev": "npm run start:api && npm run start:app"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "./node_modules/standard/eslintrc.json"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-cypress": "^2.12.1",
+    "standard": "17.0.0"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "8.25.0",
+    "prop-types": "^15.8.1"
+  }
 }

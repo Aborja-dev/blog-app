@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+/* eslint-disable*/
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { useEffect, useState } from 'react'
+import Blog from './components/Blog/Blog'
+import Login from './components/Login/Login'
+const getUserFromLocalstorage = () => {
+  const userData = window.localStorage.getItem('userSessionData') || null
+  if (userData) {
+    const {username, name, blogs} = JSON.parse(userData)
+    return {
+      username,
+      name,
+      blogs
+    }
+  }
+  else {
+    return null
+  }
 }
 
-export default App;
+function App() {
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    const user = getUserFromLocalstorage()
+    if (user) {
+      setUser(user)
+    }
+  }, [])
+  
+  return (
+    <div>
+      {
+        user
+          ? <Blog name={user.name} blogs={user.blogs}/>
+          : <Login onLoginSubmit={setUser}/>
+      }
+    </div>
+  )
+}
+
+export default App
