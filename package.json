@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "",
+  "type": "module",
   "workspaces": [
     "app",
     "api"
@@ -13,7 +14,7 @@
     "lint:start": "eslint",
     "start:api": "npm run dev --workspace=api",
     "test:api": "npm run test:all --workspace=api",
-    "test:app": "npm run test --workspace=app",
+    "test:app": "npm run test --workspace=app",    
     "start:dev": "npm run start:api && npm run start:app"
   },
   "eslintConfig": {

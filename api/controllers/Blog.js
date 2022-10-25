@@ -1,12 +1,24 @@
 const Blog = require('../models/Blog')
 const User = require('../models/User')
-const jwt = require('jsonwebtoken')
 const { authByToken } = require('../middleware/authToken')
 const blogRouter = require('express').Router()
 
 blogRouter.get('/', authByToken, async (req, response, next) => {
 	const blogs = await Blog.find({}).populate('user')
 	response.json(blogs)
+})
+blogRouter.get('/:id', async (req, response, next) => {
+	const userId = req.params.id
+	const blogs = await Blog.find({}).populate('user',{_id: true})
+	const blogsJSON = blogs.map((blog)=>blog.toJSON())
+	const filteredBlogs = blogsJSON.filter((blog)=>{
+		if (blog.user === undefined || blog.user === null) {
+			return false
+		}
+		const idString = String(blog.user.id)
+		return idString === userId
+	})
+	response.json(filteredBlogs)
 })
 
 blogRouter.delete('/:id', async (req, res) => {

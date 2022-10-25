@@ -15,7 +15,7 @@ export const apiLogin = (user) => {
       return error
     })
 }
-export const createBlog = (blog) => {
+export const newBlogRequest = (blog) => {
   const config = {
     headers: {
       authorization: `Bearer ${token}`
@@ -24,4 +24,28 @@ export const createBlog = (blog) => {
   return axios
     .post(`${baseURL}/blogs`, blog, config)
     .then(response => response.data)
+    .catch(error => { return error })
+}
+
+export const updateBlogRequest = (blogForUpdate, id) => {
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  }
+  return axios
+    .put(`${baseURL}/blogs/${id}`, blogForUpdate, config)
+    .then(response => response.data)
+    .catch(error => { return error })
+}
+export const deleteBlogRequest = (idToDelete) => {
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  }
+  return axios
+    .delete(`${baseURL}/blogs/${idToDelete}`, config)
+    .then(response => response.data)
+    .catch(error => { return error })
 }

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const loginRouter = require('express').Router()
 loginRouter.post('/', async (req, response) => {
     const { username, password } = req.body
-    const user = await User.findOne({ username: username }).populate('blogs',{id:true, title: true})
+    const user = await User.findOne({ username: username }).populate('blogs')
     let passwordCorrect = null
     if (user) {
         passwordCorrect = user.passwordHash === password

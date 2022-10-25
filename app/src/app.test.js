@@ -9,6 +9,6 @@ test('renders content', () => {
   )
 
   expect(view.container).toHaveTextContent(
-    'Component testing is done with react-testing-library'
+    'Login user'
   )
 })

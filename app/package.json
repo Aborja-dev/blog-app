@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "13.4.0",
-    "@testing-library/user-event": "14.4.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "axios": "1.1.2",
@@ -13,6 +10,9 @@
   },
   "devDependencies": {
     "eslint": "^8.25.0",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "13.4.0",
+    "@testing-library/user-event": "14.4.3",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.3.0",
@@ -24,7 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "react:start": "npm run start",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@toolz/allow-react)/\" --env=jsdom",
     "eject": "react-scripts eject"
   },
   "browserslist": {

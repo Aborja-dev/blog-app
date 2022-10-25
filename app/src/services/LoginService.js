@@ -16,3 +16,6 @@ export const login = async (user) => {
     blogs
   }
 }
+export const logout = () => {
+  return null
+}

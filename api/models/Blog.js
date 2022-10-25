@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const blogSchema = new Schema({
 	title: {
@@ -18,7 +18,7 @@ const blogSchema = new Schema({
 })
 
 blogSchema.set('toJSON', {
-	transform: (doc, returnedObject)=>{
+	transform: (doc, returnedObject) => {
 		returnedObject.id = returnedObject._id
 		delete returnedObject._id
 		delete returnedObject.__v
