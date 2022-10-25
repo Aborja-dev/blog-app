@@ -13,5 +13,5 @@ export const Alert = ({ message }) => {
 }
 
 Alert.propTypes = {
-  message: propTypes
+  message: propTypes.string
 }

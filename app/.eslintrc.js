@@ -17,5 +17,6 @@ module.exports = {
     'react'
   ],
   rules: {
+    'no-debugger': 'off'
   }
 }

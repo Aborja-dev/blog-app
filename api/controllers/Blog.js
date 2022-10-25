@@ -28,8 +28,16 @@ blogRouter.delete('/:id', async (req, res) => {
 })
 blogRouter.put('/:id', async (req, res) => {
 	const id = req.params.id
-	const body = req.body
-	const result = await Blog.findByIdAndUpdate(id, body, { new: true })
+	const {title, author, url, likes} = req.body
+	const newBody = {
+		_id: id,
+		title,
+		author,
+		url,
+		likes,
+		__v: 0
+	}
+	const result = await Blog.findByIdAndUpdate(id, newBody, { new: true })
 	return res.json(result)
 })
 blogRouter.post('/', authByToken ,async (req, response, next) => {
@@ -43,7 +51,7 @@ blogRouter.post('/', authByToken ,async (req, response, next) => {
 			title,
 			url,
 			likes: body.likes ? body.likes : 0,
-			user: body.userId
+			user: userId
 		})
 		const result = await blog.save()
 		user.blogs = user.blogs.concat(result._id)

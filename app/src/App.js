@@ -1,5 +1,3 @@
-/* eslint-disable*/
-
 import React, { useEffect, useState } from 'react'
 import BlogList from './components/BlogList/BlogList'
 import Login from './components/Login/Login'
@@ -9,29 +7,28 @@ import { Alert } from './components/Alert/Alert'
 const getUserFromLocalstorage = () => {
   const userData = window.localStorage.getItem('userSessionData') || null
   if (userData) {
-    const {username, name, blogs} = JSON.parse(userData)
+    const { username, name, blogs } = JSON.parse(userData)
     return {
       username,
       name,
       blogs
     }
-  }
-  else {
+  } else {
     return null
   }
 }
 const getTokenFromLocalstorage = () => {
   const userData = window.localStorage.getItem('userSessionData') || null
   if (userData) {
-    const {token} = JSON.parse(userData)
+    const { token } = JSON.parse(userData)
     return token
-  }
-  else {
+  } else {
     return null
   }
 }
-function App() {
+function App () {
   const [user, setUser] = useState(null)
+  const [alertMessage, setAlertMessage] = useState(null)
   useEffect(() => {
     const user = getUserFromLocalstorage()
     const token = getTokenFromLocalstorage()
@@ -49,20 +46,20 @@ function App() {
       setUser(user)
     } catch (error) {
       setAlertMessage('usuario incorrecto')
-        setTimeout(() => {
-          setAlertMessage(null)
-        }, 3000)
+      setTimeout(() => {
+        setAlertMessage(null)
+      }, 3000)
     }
   }
   return (
     <div>
-      <Alert />
+      <Alert message={alertMessage} />
       {
         user
-          ? <BlogList name={user.name} blogs={user.blogs}/>
-          : <Login onLoginSubmit={submitUserHandle}/>
+          ? <BlogList name={user.name} />
+          : <Login onLoginSubmit={submitUserHandle} />
       }
-      { user ? <button onClick={handleLogout}>Logout</button> : null}
+      {user ? <button onClick={handleLogout}>Logout</button> : null}
     </div>
   )
 }

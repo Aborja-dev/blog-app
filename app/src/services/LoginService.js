@@ -7,15 +7,15 @@ export const login = async (user) => {
     return null
   }
   const userToken = loginResponse.token
-  const { username, name, blogs } = loginResponse
+  const { username, name } = loginResponse
   setToken(userToken)
   window.localStorage.setItem('userSessionData', JSON.stringify(loginResponse))
   return {
     username,
-    name,
-    blogs
+    name
   }
 }
+
 export const logout = () => {
   return null
 }

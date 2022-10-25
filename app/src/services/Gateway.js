@@ -5,7 +5,11 @@ let token = ''
 export const setToken = (newToken) => {
   token = newToken
 }
-
+export const getBlogsByUser = (userId) => {
+  return axios
+    .get(`${baseURL}/blogs/${userId}`)
+    .then(response => response.data)
+}
 export const apiLogin = (user) => {
   return axios
     .post(`${baseURL}/login`, user)
@@ -28,13 +32,8 @@ export const newBlogRequest = (blog) => {
 }
 
 export const updateBlogRequest = (blogForUpdate, id) => {
-  const config = {
-    headers: {
-      authorization: `Bearer ${token}`
-    }
-  }
   return axios
-    .put(`${baseURL}/blogs/${id}`, blogForUpdate, config)
+    .put(`${baseURL}/blogs/${id}`, blogForUpdate)
     .then(response => response.data)
     .catch(error => { return error })
 }

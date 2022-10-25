@@ -1,24 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
 import { BlogDetail } from '../BlogDetail'
 import { Toggable } from '../Toggable'
-import { Alert } from '../Alert/Alert'
-import { deleteBlogRequest } from '../../services/Gateway'
-export const Blog = ({ blog }) => {
+export const Blog = ({ blog, clickDelete }) => {
   const { title } = blog
-  const [message, setMessage] = useState(null)
-  const deleteHandler = async () => {
-    const id = blog.id
-    await deleteBlogRequest(id)
-    setMessage('la entrada se ha borrado')
-    setTimeout(() => {
-      setMessage(null)
-    }, 3000)
-  }
+  const clickHandler = () => clickDelete(blog.id)
   return (
     <li>{title}
-      <Alert message={message} />
-      <button onClick={deleteHandler}>Borrar</button>
+      <button onClick={clickHandler}>Borrar</button>
       <Toggable buttonLabel='show more'>
         <BlogDetail data={blog} />
       </Toggable>
@@ -26,5 +15,6 @@ export const Blog = ({ blog }) => {
   )
 }
 Blog.propTypes = {
-  blog: propTypes.any.isRequired
+  blog: propTypes.object.isRequired,
+  clickDelete: propTypes.func.isRequired
 }
