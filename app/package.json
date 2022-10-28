@@ -25,7 +25,8 @@
     "build": "react-scripts build",
     "react:start": "npm run start",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@toolz/allow-react)/\" --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open"
   },
   "browserslist": {
     "production": [

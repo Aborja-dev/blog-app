@@ -3,16 +3,20 @@ import { apiLogin, setToken } from './Gateway'
 
 export const login = async (user) => {
   const loginResponse = await apiLogin(user)
-  if (loginResponse === 'Usuario invalido o no existe') {
-    return null
+  const responseBody = loginResponse.data
+  if (responseBody === 'Usuario invalido o no existe') {
+    return { status: loginResponse.status }
   }
-  const userToken = loginResponse.token
-  const { username, name } = loginResponse
+  const userToken = responseBody.token
+  const { username, name } = responseBody
   setToken(userToken)
-  window.localStorage.setItem('userSessionData', JSON.stringify(loginResponse))
+  window.localStorage.setItem('userSessionData', JSON.stringify(responseBody))
   return {
-    username,
-    name
+    body: {
+      username,
+      name
+    },
+    status: loginResponse.status
   }
 }
 

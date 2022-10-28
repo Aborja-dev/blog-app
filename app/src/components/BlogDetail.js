@@ -1,37 +1,27 @@
 /* eslint-disable*/
-import React, { useState } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
-import { updateBlogRequest } from '../services/Gateway'
 
-export const BlogDetail = ({ data }) => {
+export const BlogDetail = ({ data, like }) => {
   const { likes, author, url } = data
-  const [like, setLike] = useState(likes)
-  const likeHandler = async () => {
-    const updatedBlog = updateBlog()
-    const id = data.id
-    const updateBlogResponse = await updateBlogRequest(updatedBlog, id)
-    setLike(updateBlogResponse.likes)
-  }
-  const updateBlog = () => {
-    const newLikes = like + 1
-    return {
-      ...data,
-      likes: newLikes
-    }
-  }
+
+
   return (
-    <div>
+    <>
+    <article data-testid="blog-detail">
       <p><a href='#'>{url}</a></p>
       <p>
-        likes: {like}
+        likes: {likes}
       </p>
-      <button onClick={likeHandler}>Like</button>
+      <button onClick={like}>Like</button>
       <p>{author}</p>
-    </div>
+    </article>
+    </>
 
   )
 }
 
 BlogDetail.propTypes = {
-  data: propTypes.any
+  data: propTypes.any,
+  like: propTypes.func
 }

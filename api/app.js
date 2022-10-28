@@ -9,11 +9,15 @@ const noFound = require('./middleware/noFound')
 const errorHandler = require('./middleware/errorHandler')
 const userRouter = require('./controllers/User')
 const loginRouter = require('./controllers/Login')
+const testingRouter = require('./controllers/testing')
 app.use(express.json())
 app.use(cors())
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogRouter)
 app.use('/api/users', userRouter)
+if (process.env.NODE_ENV === 'test') {
+	app.use('/api/testing', testingRouter)
+}
 app.use(noFound)
 app.use(errorHandler)
 const PORT = process.env.PORT || 3003

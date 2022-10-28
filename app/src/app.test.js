@@ -7,7 +7,6 @@ test('renders content', () => {
   const view = render(
     <App />
   )
-
   expect(view.container).toHaveTextContent(
     'Login user'
   )

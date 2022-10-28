@@ -13,9 +13,13 @@ export const getBlogsByUser = (userId) => {
 export const apiLogin = (user) => {
   return axios
     .post(`${baseURL}/login`, user)
-    .then(response => response.data)
     .catch(error => {
-      if (error.response.status === 401) { return 'Usuario invalido o no existe' }
+      if (error.response.status === 401) {
+        return {
+          data: 'Usuario invalido o no existe',
+          status: 401
+        }
+      }
       return error
     })
 }

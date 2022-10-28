@@ -2,10 +2,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
 export const Alert = ({ message }) => {
-  console.log(message)
   if (message) {
     return (
-      <div>{message}</div>
+      <div className='alert'>{message}</div>
     )
   } else {
     return null

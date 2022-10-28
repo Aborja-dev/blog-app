@@ -1,31 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import BlogList from './components/BlogList/BlogList'
-import Login from './components/Login/Login'
+import BlogList from './components/BlogList'
+import Login from './components/Login'
 import { setToken } from './services/Gateway'
 import { logout } from './services/LoginService'
-import { Alert } from './components/Alert/Alert'
-const getUserFromLocalstorage = () => {
-  const userData = window.localStorage.getItem('userSessionData') || null
-  if (userData) {
-    const { username, name, blogs } = JSON.parse(userData)
-    return {
-      username,
-      name,
-      blogs
-    }
-  } else {
-    return null
-  }
-}
-const getTokenFromLocalstorage = () => {
-  const userData = window.localStorage.getItem('userSessionData') || null
-  if (userData) {
-    const { token } = JSON.parse(userData)
-    return token
-  } else {
-    return null
-  }
-}
+import { Alert } from './components/Alert'
+import { getTokenFromLocalstorage, getUserFromLocalstorage } from './utils/utils_functions'
+
 function App () {
   const [user, setUser] = useState(null)
   const [alertMessage, setAlertMessage] = useState(null)
@@ -42,14 +22,15 @@ function App () {
     setUser(resetUser)
   }
   const submitUserHandle = (user) => {
-    try {
-      setUser(user)
-    } catch (error) {
-      setAlertMessage('usuario incorrecto')
-      setTimeout(() => {
-        setAlertMessage(null)
-      }, 3000)
-    }
+    user.constructor.name === 'Error'
+      ? triggerAlertMessage(user.message)
+      : setUser(user)
+  }
+  const triggerAlertMessage = (message) => {
+    setAlertMessage(message)
+    setTimeout(() => {
+      setAlertMessage(null)
+    }, 3000)
   }
   return (
     <div>
