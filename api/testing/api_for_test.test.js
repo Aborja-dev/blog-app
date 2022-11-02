@@ -49,6 +49,23 @@ describe('api para pruebas',()=>{
         const blogsInDb = await findAndMap(Blog, 'title')
         expect(blogsInDb).toContain(newBlog.title)
     })
+    test('devuelve la lista de blogs por usuarios', async () => {
+        const userId = (await findAndMap(User, 'id'))[0]
+        const newBlog = {
+            "title": "blog de prueba para test API",
+            "author": "Abraham Borja",
+            "url": "http://miblog.com/1",
+            "likes": 0,
+            user: userId
+        }
+        await api.post('/api/testing/blog')
+        .send(newBlog)
+        const result = await api
+            .get(`/api/blogs/${userId}`)
+            .expect(200)
+			.expect('Content-Type', /application\/json/)
+        expect(result.body).toHaveLength(1)
+    })
     afterAll(async () => {
         mongoose.connection.close()
 		server.close()

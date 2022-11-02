@@ -25,6 +25,7 @@ const BlogList = (props) => {
   }, [])
 
   const createBlog = async (blog) => {
+    debugger
     try {
       const _newBlog = await createNewBlog(blog)
       showAlertMessage('la entrada se ha creado')
@@ -82,7 +83,7 @@ const BlogList = (props) => {
       </ul>
       <div>
         <h2>Crear Nuevo Blog</h2>
-        <Toggable buttonLabel='Nuevo blog'>
+        <Toggable buttonLabel='Nuevo blog' data-test-id='toggabel-new-blog'>
           <NewBlogForm onSubmitForm={createBlog} />
         </Toggable>
       </div>

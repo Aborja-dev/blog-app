@@ -1,5 +1,5 @@
 export const getIDFromLocalstorage = () => {
-  const userData = window.localStorage.getItem('userSessionData') || null
+  const userData = window.localStorage.getItem('userSession') || null
   if (userData) {
     const { id } = JSON.parse(userData)
     return id
@@ -9,7 +9,7 @@ export const getIDFromLocalstorage = () => {
 }
 
 export const getUserFromLocalstorage = () => {
-  const userData = window.localStorage.getItem('userSessionData') || null
+  const userData = window.localStorage.getItem('userSession') || null
   if (userData) {
     const { username, name, blogs } = JSON.parse(userData)
     return {
@@ -22,7 +22,7 @@ export const getUserFromLocalstorage = () => {
   }
 }
 export const getTokenFromLocalstorage = () => {
-  const userData = window.localStorage.getItem('userSessionData') || null
+  const userData = window.localStorage.getItem('userSession') || null
   if (userData) {
     const { token } = JSON.parse(userData)
     return token

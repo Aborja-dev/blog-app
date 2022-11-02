@@ -26,18 +26,34 @@ describe('Blog app', () => {
   })
   describe('funciones de <Blog />', () => {
     beforeEach(() => {
-      cy
-        .request('POST', 'http://localhost:3001/api/login', {
-          username: 'arahakna',
-          password: 'mipassword'
-
-        })
-        .then(response => {
-          window.localStorage.setItem('userSession', JSON.stringify(response.body))
-        })
+      cy.request('POST', 'http://localhost:3001/api/testing/blog', {
+        title:'pruebas e2e con cypress',
+        url: 'http://localhost:3001',
+        author: "Abraham Borja",
+        likes: 0
+      })
+      cy.login({
+        username: 'arahakna',
+        password: 'mipassword'
+      })
+      
     })
-    it.only('show blogList', () => {
-
+    it('create a blog', () => { 
+      cy.get('[style="display: block;"]').click()
+      cy.get("input[name='title']").type('blog de prueba con cypress')
+      cy.get("input[name='url']").type('http://miblog')
+      cy.get("form > button").click()
+      cy.get("body")
+      .should("contain", "blog de prueba con cypress")
+    })
+    it('like a blog', () => {
+      cy.contains('show more').click()
+      cy.contains('Like').click()
+      cy.get('body').should('contain',1)
+    })
+    it('delete a blog', () => {
+      cy.contains('Borrar').click()
+      cy.contains('pruebas e2e con cypress').should('not.exist')
     })
   })
 })

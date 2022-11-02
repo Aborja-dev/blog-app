@@ -58,6 +58,7 @@ describe('casos de usuario',() => {
 			.expect('Content-Type', /application\/json/)
         expect(result.body).toHaveLength(1)
     })
+    
 	afterAll(async () => {
         mongoose.connection.close()
 		server.close()

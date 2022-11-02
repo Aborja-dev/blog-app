@@ -92,8 +92,9 @@ describe('pruebas de api', () => {
 		expect(result).not.toContain(id)
 	})
 	test('actualizar una entrada', async () => {
+		const idBlog = await takeAnID(Blog)
 		const newEntry = {
-			_id: '5a422bc61b54a676234d17fc',
+			_id: idBlog,
 			title: 'Type wars with Typescript',
 			author: 'Robert C. Martin',
 			url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',

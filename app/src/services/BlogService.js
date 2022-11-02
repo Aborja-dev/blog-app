@@ -7,7 +7,7 @@ export const setBlogsService = (_blogs) => {
 }
 
 export const createNewBlog = ({ title, url }) => {
-  const userData = window.localStorage.getItem('userSessionData') || null
+  const userData = window.localStorage.getItem('userSession') || null
   const { name: author } = JSON.parse(userData)
   const blog = { title, url, author }
   setErrorMessage('entrada de blog creada')
