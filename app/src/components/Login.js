@@ -2,12 +2,16 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import { login } from '../services/LoginService'
+import { useDispatch } from 'react-redux'
+import { userActions } from '../reducer/userReducer'
 
 const Login = ({ onLoginSubmit }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
   const submitLoginHandle = async (event) => {
     event.preventDefault()
+    dispatch(userActions.login({ username, password }))
     const loginResult = await login({ username, password })
     setUsername('')
     setPassword('')

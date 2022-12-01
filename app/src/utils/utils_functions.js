@@ -30,7 +30,13 @@ export const getTokenFromLocalstorage = () => {
     return null
   }
 }
-
+export const updateByLikes = (blog) => {
+  const like = blog.likes + 1
+  return {
+    ...blog,
+    likes: like
+  }
+}
 export const sortByLikes = (a, b) => {
   const likesA = a.likes
   const likesB = b.likes

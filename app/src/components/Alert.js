@@ -1,7 +1,8 @@
 
 import React from 'react'
-import propTypes from 'prop-types'
-export const Alert = ({ message }) => {
+import { useSelector } from 'react-redux'
+export const Alert = () => {
+  const message = useSelector(state => state.notification)
   if (message) {
     return (
       <div className='alert'>{message}</div>
@@ -9,8 +10,4 @@ export const Alert = ({ message }) => {
   } else {
     return null
   }
-}
-
-Alert.propTypes = {
-  message: propTypes.string
 }

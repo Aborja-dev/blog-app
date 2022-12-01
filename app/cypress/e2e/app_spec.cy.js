@@ -12,7 +12,7 @@ describe('Blog app', () => {
   it('passes', () => {
     cy.visit('http://localhost:3000')
   })
-  it('login', () => {
+  it.only('login', () => {
     cy.get("input[name='username']").type('arahakna')
     cy.get("input[name='password']").type('mipassword')
     cy.get('form > button').click()
@@ -27,29 +27,28 @@ describe('Blog app', () => {
   describe('funciones de <Blog />', () => {
     beforeEach(() => {
       cy.request('POST', 'http://localhost:3001/api/testing/blog', {
-        title:'pruebas e2e con cypress',
+        title: 'pruebas e2e con cypress',
         url: 'http://localhost:3001',
-        author: "Abraham Borja",
+        author: 'Abraham Borja',
         likes: 0
       })
       cy.login({
         username: 'arahakna',
         password: 'mipassword'
       })
-      
     })
-    it('create a blog', () => { 
+    it('create a blog', () => {
       cy.get('[style="display: block;"]').click()
       cy.get("input[name='title']").type('blog de prueba con cypress')
       cy.get("input[name='url']").type('http://miblog')
-      cy.get("form > button").click()
-      cy.get("body")
-      .should("contain", "blog de prueba con cypress")
+      cy.get('form > button').click()
+      cy.get('body')
+        .should('contain', 'blog de prueba con cypress')
     })
     it('like a blog', () => {
       cy.contains('show more').click()
       cy.contains('Like').click()
-      cy.get('body').should('contain',1)
+      cy.get('body').should('contain', 1)
     })
     it('delete a blog', () => {
       cy.contains('Borrar').click()

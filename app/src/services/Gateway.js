@@ -5,9 +5,12 @@ let token = ''
 export const setToken = (newToken) => {
   token = newToken
 }
-export const getBlogsByUser = (userId) => {
+export const getBlogsByUser = (userId, url = baseURL) => {
+  const requestUrl = userId
+    ? `${url}/blogs/${userId}`
+    : `${url}`
   return axios
-    .get(`${baseURL}/blogs/${userId}`)
+    .get(requestUrl)
     .then(response => response.data)
 }
 export const apiLogin = (user) => {

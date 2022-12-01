@@ -1,74 +1,49 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import NewBlogForm from './NewBlog'
-import { createNewBlog, deleteBlog, setBlogsService, updateBlog } from '../services/BlogService'
 import { Blog } from './Blog'
-import { Alert } from './Alert'
 import { Toggable } from './Toggable'
-import { getBlogsByUser } from '../services/Gateway'
-import { getIDFromLocalstorage, sortByLikes } from '../utils/utils_functions'
+import { getIDFromLocalstorage } from '../utils/utils_functions'
+import { useDispatch, useSelector } from 'react-redux'
+import { blogsActions } from '../reducer/blogReducer'
+import { showNotification } from '../reducer/notificationReducer'
 
-const BlogList = (props) => {
-  const [blogs, setBlogs] = useState([])
-  const [alertMessage, setAlertMessage] = useState(null)
-  useEffect(() => {
-    setBlogsService(blogs)
-  }, [blogs])
+const BlogList = () => {
+  const blogs = useSelector(state => state.blogs)
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
+
   useEffect(() => {
     const userID = getIDFromLocalstorage()
     if (userID) {
-      getBlogsByUser(userID)
-        .then(_blogs => {
-          setBlogs(_blogs)
-        })
+      dispatch(blogsActions.init())
     }
-  }, [])
+  }, [dispatch])
 
   const createBlog = async (blog) => {
-    debugger
     try {
-      const _newBlog = await createNewBlog(blog)
+      dispatch(blogsActions.create(blog))
       showAlertMessage('la entrada se ha creado')
-      renderNewBlogList(_newBlog)
     } catch (error) {
       showAlertMessage('ha habido un error')
     }
   }
-  const renderNewBlogList = (newBlog) => {
-    const blogList = [...blogs, newBlog]
-    setBlogs(blogList)
-  }
   const showAlertMessage = (message) => {
-    setAlertMessage(message)
-    setTimeout(() => {
-      setAlertMessage(null)
-    }, 5000)
+    dispatch(showNotification(message, { time: 3000 }))
   }
-  const sortClickHandler = () => {
-    const sortedBlogs = [...blogs.sort(sortByLikes)]
-    setBlogs(sortedBlogs)
-  }
+  const sortClickHandler = () => dispatch(blogsActions.sort())
+
   const deleteHandler = async (id) => {
-    const _deleteBlog = await deleteBlog(id)
-    showAlertMessage('Laentrada se ha borrado')
-    setBlogs(_deleteBlog)
+    dispatch(blogsActions.deleteBlogs(id))
+    showAlertMessage('La entrada se ha borrado')
   }
-  const likeHandler = async (blogData) => {
-    const updatedBlogList = await updateBlog({ blog: blogData }, (blog) => {
-      const like = blog.likes + 1
-      return {
-        ...blog,
-        likes: like
-      }
-    })
-    setBlogs(updatedBlogList)
-  }
+  const likeHandler = async (blogData) => dispatch(blogsActions.updateLikes({ blog: blogData }))
 
   return (
     <div>
-      <Alert message={alertMessage} />
       <h2>Lista de blogs</h2>
-      <p>Bienvenido {props.name}</p>
+      <p>Bienvenido {user.name}</p>
       <button onClick={sortClickHandler}>Ordenar por likes</button>
       <ul>
         {
@@ -89,9 +64,6 @@ const BlogList = (props) => {
       </div>
     </div>
   )
-}
-BlogList.propTypes = {
-  name: propTypes.string
 }
 
 export default BlogList

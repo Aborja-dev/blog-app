@@ -5,10 +5,14 @@ import { setToken } from './services/Gateway'
 import { logout } from './services/LoginService'
 import { Alert } from './components/Alert'
 import { getTokenFromLocalstorage, getUserFromLocalstorage } from './utils/utils_functions'
+import { useDispatch } from 'react-redux'
+import { userActions } from './reducer/userReducer'
+import { showNotification } from './reducer/notificationReducer'
 
 function App () {
   const [user, setUser] = useState(null)
-  const [alertMessage, setAlertMessage] = useState(null)
+  const dispatch = useDispatch()
+  // const [alertMessage, setAlertMessage] = useState(null)
   useEffect(() => {
     const user = getUserFromLocalstorage()
     const token = getTokenFromLocalstorage()
@@ -18,6 +22,7 @@ function App () {
     }
   }, [])
   const handleLogout = () => {
+    dispatch(userActions.logout())
     const resetUser = logout()
     setUser(resetUser)
   }
@@ -27,17 +32,14 @@ function App () {
       : setUser(user)
   }
   const triggerAlertMessage = (message) => {
-    setAlertMessage(message)
-    setTimeout(() => {
-      setAlertMessage(null)
-    }, 3000)
+    dispatch(showNotification(message, { time: 3000 }))
   }
   return (
     <div>
-      <Alert message={alertMessage} />
+      <Alert />
       {
         user
-          ? <BlogList name={user.name} />
+          ? <BlogList user={user} />
           : <Login onLoginSubmit={submitUserHandle} />
       }
       {user ? <button onClick={handleLogout}>Logout</button> : null}
